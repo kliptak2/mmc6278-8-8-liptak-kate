@@ -4,17 +4,17 @@ var searchBox = document.getElementById("weather-search");
 var btn = document.querySelector("button")
 var apiKey = "1c882668d9c2c1fecdb66c8653ee2c47"
 
-
+//Imperfect baseball analogy. Three true outcomes: strikeouts, walks, and home runs. Fetch = the pitch, response = a hit, catch = strike. Await = resolves the promise.
 btn.onclick = async function (e){
     e.preventDefault();
     var userQuery = searchBox.value;
-    searchBox.value = "";            //After get data.value, clear it out
-    if (!userQuery){            //If user types in anything that's a false "Value"
+    searchBox.value = "";                   //After get data.value, clear it out
+    if (!userQuery){                        //If user types in anything that's falsy, run the below function 
         renderResult("Location not found");
         return;
     }
-    var response = await fetch(`https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=${apiKey}&q=${userQuery}` //fetch = pitch, response = hit. await = resolves the promise
-    ).catch(function(error){   //If api returns an error (a.k.a can't carry out the request) Catch = strike
+    var response = await fetch(`https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=${apiKey}&q=${userQuery}` 
+    ).catch(function(error){                //If the api returns an error (a.k.a it can't carry out the request), do the following. Important! An error is still a response.
         renderResult("Location not found");
     });
     console.log(response)
@@ -22,7 +22,7 @@ btn.onclick = async function (e){
         renderResult("Location not found");
         return
     }
-    var jsonData = await response.json()  //response.json = throwing the pitch. Await resolves the promise. In javascript, a method is like a verb. Doing action.
+    var jsonData = await response.json()    //This is a promise. Response.json = throwing the pitch. In javascript, a method is like a verb, a doing action.
     console.log(jsonData)
     renderResult(jsonData)
 };
